@@ -34,7 +34,7 @@
                 <a class="nav-link " href="contact.html">Contact Us</a></li>
 
                 <li class="nav-item">
-                <a href="cart.html">  <i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="cart.php">  <i class="fa-solid fa-cart-shopping"></i></a>
                  <a href="account.html"><i class="fa-solid fa-user"></i></a>
                 </li> 
             </ul>

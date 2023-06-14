@@ -77,7 +77,8 @@ if(isset($_GET['product_id'])){
             
         <?php   while($row = $products->fetch_assoc()){ ?>
 
-   <form action="POST" method="">
+
+          
           
             <img class="img-fluid w-100 pb-1" src="assets/images/<?php echo $row['product_image'];?>" alt="" id="mainImg">
             <div class="small-img-group">
@@ -98,13 +99,21 @@ if(isset($_GET['product_id'])){
            <h6>Men/shoes</h6>
            <h3 class="py-4"> <?php echo $row['product_name'];?> </h3>
            <h2><?php echo $row['product_price'];?></h2>
+           <form  method="POST" action="cart.php">
+                        
+           <input type="hidden" name="product_id" value="<?php echo $row['product_id'];?>"/>
+           <input type="hidden" name="product_image" value="<?php echo $row['product_image'];?>"/>
+           <input type="hidden" name="product_name" value="<?php echo $row['product_name'];?>"/>
+           <input type="hidden" name="product_price" value="<?php echo $row['product_price'];?>"/>
            <input type="number" name="product_quantity" value="1"/>
            <button class="btn btn-primary" type="submit" name="add_to_cart" >Add To Cart</button>
+        </form>
+         
            <h4 class="mb-4 mt-5">Product details</h4>
            <span><?php echo $row['product_description'];?>
            </span>
         </div>
-        </from>
+       
         <?php } ?>
         
         </div>

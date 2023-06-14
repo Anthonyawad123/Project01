@@ -1,3 +1,53 @@
+
+<?php
+session_start();
+include('server/connection.php');
+
+if(isset($_POST['register'])) {
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $confpassword = $_POST['confirm-password'];
+
+    // If passwords don't match
+    if($password !== $confpassword) {
+        header('Location: register.php?error=passwords dont match');
+    } else if(strlen($password) < 6) {
+        header('Location: register.php?error=password must be at least 6 characters');
+    } else {
+        // Check if a user with this email already exists
+        $stmt1 = $con->prepare("SELECT * FROM users WHERE user_email=?");
+        $stmt1->bind_param('s', $email);
+        $stmt1->execute();
+        $result = $stmt1->get_result();
+        $num_rows = $result->num_rows;
+
+        // If a user with this email already exists
+        if($num_rows != 0) {
+            header('Location: register.php?error=user with this email already exists');
+        } else {
+            // Create a new user
+            $stmt = $con->prepare("INSERT INTO users (user_name, user_email, user_password) VALUES (?,?,?)");
+            $stmt->bind_param('sss', $name, $email, md5($password));
+            if($stmt->execute()) {
+                // If the account was created successfully
+                $_SESSION['user_email'] = $email;
+                $_SESSION['user_name'] = $name;
+                $_SESSION['logged_in'] = true;
+                header('Location: account.php?register=you registered successfully');
+            } else {
+                header('Location: register.php?error=could not create an account at the moment');
+            }
+        }
+    }
+    //if the user already exist
+}else if(isset($_SESSION['logged-in'])){
+    header('location: account.php');
+    exit;
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +100,8 @@
               <hr class="mx-auto">
             </div>
             <div class="mx-auto container">
-              <form id="register-form">
+              <form id="register-form" method="POST" action="register.php">
+                <p style="color: red"><?php if(isset($_GET['error'])){ echo $_GET['error'];}?></p>
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" class="form-control" id="register-name" name="name" placeholder="Name" required/>
@@ -69,7 +120,7 @@
                   </div>
                 <br>
                 <div class="form-group">
-                  <input type="submit" class="btn btn-outline-primary" id="login-btn" value="Registre"/>
+                  <input type="submit" class="btn btn-outline-primary" id="register-btn" name="register"value="Registre"/>
                 </div>
                 <div>
                   <a id="register-url" class="btn" href="">Don't have an account? Login</a>

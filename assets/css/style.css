@@ -277,6 +277,23 @@ color: rgb(231, 223, 223);
   max-width: 500px;
   border-top: 3px solid cadetblue;
 }
+.cart .edit-btn{
+  color:cadetblue;
+  text-decoration: none;
+  font: sixe 15px;
+  background-color: aliceblue;
+  border: none;
+  
+}
+.cart .remove-btn{
+  color:cadetblue;
+  text-decoration: none;
+  font: sixe 15px;
+
+  border: none;
+  
+}
+
 td:last-child{
   text-align: right;
 } 
