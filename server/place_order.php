@@ -43,7 +43,8 @@ foreach ($_SESSION['cart'] as $key => $value) {
 
 }
 
-    //5.remove everything from the cart
+    //5.remove everything from the cart --> delay until the payment donne
+
     //unset($_SESSION['cart']);
     //inform user wether evrything is fine there is a problem
    header('location: ../payment.php?order_status=order placed successfully');

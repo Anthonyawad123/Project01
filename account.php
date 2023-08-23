@@ -1,3 +1,22 @@
+<?php
+session_start();
+if(!isset($_SESSION['logged_in']))
+{
+  header('location:login.php');
+  exit;
+}
+
+
+
+
+
+
+
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,9 +70,9 @@
               <h3 class="font-weight-bold">Account info</h3>
                 <hr class="mx-auto">
                 <div class="account-info">
-                  <p>Name <span>anthony</span></p>
-                  <p>Email <span>awadanthony24@gmail.com</span></p>
-                  <p><a href="" id="order-btn">Your order</a></p>
+                  <p>Name <span><?php if(isset($_SESSION['user_name'])){echo $_SESSION['user_name'];}   ?></span></p>
+                  <p>Email <span><?php if(isset($_SESSION['user_email'])){ echo $_SESSION['user_email']; }  ?></span></p>
+                  <p><a href="#orders" id="order-btn">Your order</a></p>
                   <p><a href="" id="login-btn">logout</a></p>
                 </div>
             </div>
@@ -84,6 +103,26 @@
 
 
 
+
+  <!-- Order -->
+<section id="#orders"class="my-5 py-5">
+    <div class="container mx-auto">
+        <h3 class="text-center font-weight-bold">Your Orders</h3>
+        <hr class="mx-auto">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                      
+                        <th>Product</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+             
+            </table>
+        </div>
+    </div>
+</section>
 
 
 
