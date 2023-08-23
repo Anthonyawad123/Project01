@@ -372,3 +372,41 @@ th:last-child{
 #contact span{
   color: cadetblue;
 }
+.product img{
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  object-fit: cover;
+}
+.pagination a{
+  color: coral;
+}
+.pagination li:hover a{
+  color: #fff;
+  background-color: coral;
+  font-weight: bold !important;
+}
+
+.container {
+  display: flex;
+}
+
+#search {
+  width: 250px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  margin-right: 10px;
+}
+
+#shop {
+  flex: 1;
+  padding: 20px;
+      margin: 20px;
+}
+.cart-quantity{
+  background-color: rgb(82, 100, 182);
+  color: white;
+  padding: 2px 5px;
+  border-radius: 50%;
+  margin: -2px;
+}

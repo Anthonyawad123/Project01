@@ -1,6 +1,10 @@
 <?php
 include('connection.php');
 session_start();
+if(!isset($_SESSION['logged_in'])){
+   header('location: ../checkout.php?message=PLease login/register to place an order');
+   exit;
+}else{
 if(isset($_POST['place_order'])) {
     // 0. Get user info and store in the database
     $name = $_POST['name'];
@@ -9,8 +13,8 @@ if(isset($_POST['place_order'])) {
     $city = $_POST['city'];
     $address = $_POST['Address'];
     $order_cost = $_SESSION['total'];
-    $order_status = "on_hold";
-    $user_id = 1;
+    $order_status = "not paid";
+    $user_id = $_SESSION['user_id'];
     $order_date = date('Y-m-d H:i:s');
     
    
@@ -19,8 +23,11 @@ if(isset($_POST['place_order'])) {
    
         // 1. Bind the parameters and execute the statement
         $stmt->bind_param('isiisss', $order_cost, $order_status, $user_id, $phone, $city, $address, $order_date);
-        $stmt->execute();
-        
+       $stmt_status= $stmt->execute();
+        if(!$stmt_status){
+          header('location:index.php');
+          exit;
+        }
         // 2. Get the inserted order ID
         $order_id = $stmt->insert_id;
         
@@ -49,3 +56,8 @@ foreach ($_SESSION['cart'] as $key => $value) {
     //inform user wether evrything is fine there is a problem
    header('location: ../payment.php?order_status=order placed successfully');
 }
+
+
+}
+
+?>
